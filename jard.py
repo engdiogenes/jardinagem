@@ -656,7 +656,7 @@ elif page == "Histórico de Cortes":
             area_info = {i + 1: st.session_state.area_info[i] for i in range(35)}
             df["Área"] = df["area"].map(lambda x: area_info.get(x, {}).get("nome", f"Área {x}"))
             df["Máquina"] = df["area"].map(lambda x: area_info.get(x, {}).get("maquina", "Desconhecida"))
-            df["Dias desde o Corte"] = (datetime.now().date() - df["Data do Corte"].dt.date).dt.days
+            df["Dias desde o Corte"] = (datetime.now() - df["Data do Corte"]).dt.days
             df["Status"] = df.apply(lambda row: get_status(
                 row["Dias desde o Corte"],
                 area_info.get(row["area"], {}).get("periodo_chuvoso", 30),
