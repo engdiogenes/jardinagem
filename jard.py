@@ -11,10 +11,22 @@ import os
 import matplotlib.pyplot as plt
 
 def load_area_config():
-    if os.path.exists("area_config.json"):
-        with open("area_config.json", "r") as f:
-            return json.load(f)
-    return None
+    try:
+        if os.path.exists("area_config.json"):
+            with open("area_config.json", "r") as f:
+                return json.load(f)
+    except Exception as e:
+        st.warning(f"Erro ao carregar configuração: {e}")
+    # Retorna configuração padrão se não existir ou falhar
+    return [
+        {
+            "nome": f"Área {i+1}",
+            "maquina": "Trator",
+            "periodo_chuvoso": 30,
+            "periodo_seco": 60
+        } for i in range(35)
+    ]
+
 
 def save_area_config(config):
     with open("area_config.json", "w") as f:
